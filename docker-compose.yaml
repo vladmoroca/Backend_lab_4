@@ -1,0 +1,17 @@
+version: '4'
+
+services:
+  lab3:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PORT: "3333"
+    ports:
+      - "3333:3333"
+  db:
+    image: postgres:15.4-alpine3.18
+    environment:
+      POSTGRES_PASSWORD: 2108
+      POSTGRES_DB: test
