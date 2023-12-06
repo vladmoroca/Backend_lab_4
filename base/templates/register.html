@@ -79,6 +79,26 @@
             document.getElementById('loginMessage').innerHTML = "Incorrect username or password";
         });
     }
+
+    function delete_user() {
+        var user_id = document.getElementById('user_id').value;
+        var headers = new Headers();
+        headers.append('Authorization', 'Bearer ' + token);
+
+       fetch('/user/' + user_id, {
+            method: 'DELETE',
+            headers: headers,
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('user_id').value = '';
+            document.getElementById('delete_message').innerHTML = 'succesful deleted'
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            document.getElementById('delete_message').innerHTML = "Incorrect user_id";
+        });
+    }
     </script>
     <h2>Register</h2>
     <form id="registerForm">
@@ -102,8 +122,16 @@
 
         <button type="button" onclick="login()">Login</button>
     </form>
-
     <div id="loginMessage"></div>
+
+    <h2>Delete</h2>
+    <form id="DeleteForm">
+        <label for="user_id">user_id:</label>
+        <input type="text" id="user_id" name="user_id" required>
+        <button type="button" onclick="delete_user()">Delete</button>
+    </form>
+    <div id="delete_message"></div>
+
     <button type="button" onclick="getUsers()">UserList</button>
     <div id="userList"></div>
 
