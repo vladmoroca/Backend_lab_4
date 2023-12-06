@@ -3,6 +3,7 @@ from marshmallow import Schema, fields
 class userSchema(Schema):
     id = fields.UUID(dump_only=True)
     name = fields.String(required=True)
+    password = fields.String(required=True)
 
 class categorySchema(Schema):
     id = fields.UUID(dump_only=True)

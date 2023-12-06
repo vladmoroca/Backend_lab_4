@@ -4,9 +4,11 @@ COPY requirements.txt .
 
 RUN python -m pip install -r requirements.txt
 
+
 COPY . /base
 
 WORKDIR /base
+ENV JWT_SECRET_KEY="9c2e5278b4777d5a97c5b9f4f132792e951e6a91a4e0d822"
 
 ENV FLASK_APP=base/__init__
 

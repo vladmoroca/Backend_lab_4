@@ -7,6 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
+      JWT_SECRET_KEY: "9c2e5278b4777d5a97c5b9f4f132792e951e6a91a4e0d822"
       PORT: "3333"
     ports:
       - "3333:3333"
