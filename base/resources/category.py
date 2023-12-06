@@ -17,7 +17,7 @@ def categories_get():
 
 @category_blueprint.post("/category")
 def create_category():
-    category_data = request.args
+    category_data = request.get_json()
     category_schema = categorySchema()
     try:
         validated_data = category_schema.load(category_data)
@@ -35,7 +35,7 @@ def create_category():
 
 @category_blueprint.delete("/category/<category_id>")
 def category_delete(category_id):
-    user_id = request.args.get('user_id')
+    user_id = request.get_json()["user_id"]
     category = categoryModel.query.get(category_id)
     if category:
         if(not user_id or user_id != category.user_id):

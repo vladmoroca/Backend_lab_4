@@ -12,6 +12,11 @@ from passlib.hash import pbkdf2_sha256
 
 user_blueprint = Blueprint('user', __name__)
 
+@user_blueprint.route('/home')
+def register_page():
+    return render_template('register.html')
+
+
 @user_blueprint.post("/register")
 def create_user():
     user_data = request.json

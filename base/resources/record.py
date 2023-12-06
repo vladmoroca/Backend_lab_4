@@ -11,7 +11,7 @@ record_blueprint = Blueprint('record', __name__)
 
 @record_blueprint.post("/record")
 def create_record():
-    record_data = request.args
+    record_data = request.get_json()
     record_schema = recordSchema()
     try:
         validated_data = record_schema.load(record_data)
@@ -40,8 +40,8 @@ def create_record():
 
 @record_blueprint.get("/record")
 def get_records():
-    user_id = request.args.get("user_id")
-    category_id = request.args.get("category_id")
+    user_id = request.get_json()["user_id"]
+    category_id = request.get_json()["category_id"]
     
     if user_id is None and category_id is None:
         return "Missing parameters", 400

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+</head>
+<body>
+    <script >
+    let token = "";
+    function register() {
+        var name = document.getElementById('name1').value;
+        var password = document.getElementById('password1').value;
+    
+        fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                password: password
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('name1').value = '';
+            document.getElementById('password1').value = '';
+            document.getElementById('registrationMessage').innerHTML = 'Registration successful: ' + JSON.stringify(data.id);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            document.getElementById('registrationMessage').innerHTML = "User with this name exist";
+        });
+
+    }
+
+    function getUsers() {
+        var headers = new Headers();
+        headers.append('Authorization', 'Bearer ' + token);
+
+        fetch('/users', {
+            method: 'GET',
+            headers: headers,
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('userList').innerHTML = JSON.stringify(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            document.getElementById('userList').innerHTML = "Error fetching user list";
+        });
+    }
+
+    function login() {
+        var username = document.getElementById('username2').value;
+        var password = document.getElementById('password2').value;
+
+       fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: username,
+                password: password
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('username2').value = '';
+            document.getElementById('password2').value = '';
+            document.getElementById('loginMessage').innerHTML = data.message;
+            token = data.access_token;
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            document.getElementById('loginMessage').innerHTML = "Incorrect username or password";
+        });
+    }
+    </script>
+    <h2>Register</h2>
+    <form id="registerForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name1" name="name" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password1" name="password" required>
+
+        <button type="button" onclick="register()">Register</button>
+    </form>
+
+    <div id="registrationMessage"></div>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username2" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password2" name="password" required>
+
+        <button type="button" onclick="login()">Login</button>
+    </form>
+
+    <div id="loginMessage"></div>
+    <button type="button" onclick="getUsers()">UserList</button>
+    <div id="userList"></div>
+
+</body>
+</html>
+
