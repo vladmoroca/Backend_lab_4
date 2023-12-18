@@ -16,3 +16,9 @@ services:
     environment:
       POSTGRES_PASSWORD: 2108
       POSTGRES_DB: test
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+
+volumes:
+  pg_data:

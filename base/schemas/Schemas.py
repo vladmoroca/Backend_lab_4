@@ -13,7 +13,7 @@ class categorySchema(Schema):
     
 class recordSchema(Schema):
     id = fields.UUID(dump_only=True)
-    user_id = fields.UUID(required=True)
+    user_id = fields.UUID(dump_only=True)
     category_id = fields.UUID(required=True)
     created_at = fields.DateTime(dump_only=True)
     amount = fields.Float(required=True)
